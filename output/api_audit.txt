@@ -1,0 +1,45 @@
+sunpy version under test: 8.0.0
+GenericTimeSeries.resample exists: False
+
+============================================================================================
+GenericTimeSeries (baseline)
+============================================================================================
+| operation                     | subclass | units | meta | uncertainty | note                                                                          |
+|-------------------------------|----------|-------|------|-------------|-------------------------------------------------------------------------------|
+| truncate                      | yes      | yes   | yes  | n/a         |                                                                               |
+| concatenate                   | yes      | yes   | yes  | n/a         |                                                                               |
+| concatenate(same_source=True) | yes      | yes   | yes  | n/a         |                                                                               |
+| sort_index                    | yes      | yes   | yes  | n/a         |                                                                               |
+| add_column                    | yes      | yes   | yes  | n/a         |                                                                               |
+| remove_column                 | yes      | yes   | yes  | n/a         |                                                                               |
+| extract                       | yes      | yes   | yes  | n/a         |                                                                               |
+| resample                      | n/a      | n/a   | n/a  | n/a         | raised AttributeError: 'GenericTimeSeries' object has no attribute 'resample' |
+
+============================================================================================
+UncertainTimeSeries (prototype)
+============================================================================================
+| operation                     | subclass | units | meta | uncertainty | note                                                                            |
+|-------------------------------|----------|-------|------|-------------|---------------------------------------------------------------------------------|
+| truncate                      | yes      | yes   | yes  | NO          |                                                                                 |
+| concatenate                   | yes      | yes   | yes  | NO          |                                                                                 |
+| concatenate(same_source=True) | yes      | yes   | yes  | NO          |                                                                                 |
+| sort_index                    | NO       | yes   | yes  | NO          | -> GenericTimeSeries                                                            |
+| add_column                    | yes      | yes   | yes  | NO          |                                                                                 |
+| remove_column                 | yes      | yes   | yes  | NO          |                                                                                 |
+| extract                       | NO       | yes   | yes  | NO          | -> GenericTimeSeries                                                            |
+| resample                      | n/a      | n/a   | n/a  | n/a         | raised ValueError: resample() requires an explicit `correlation`. Uncertainty p |
+
+============================================================================================
+How each operation constructs its return value (sunpy/timeseries/timeseriesbase.py)
+============================================================================================
+  add_column      self.__class__(data, meta, units)
+  remove_column   self.__class__(data, deepcopy(meta), units)
+  truncate        self.__class__(data.sort_index(), meta, copy(units))
+  concatenate     self.__class__(...) if all operands share a class,
+                  else GenericTimeSeries(...)   [NOT switched on same_source]
+  sort_index      GenericTimeSeries(...)   <- hardcoded, downcasts
+  extract         GenericTimeSeries(...)   <- hardcoded, downcasts
+
+Every one of these calls the three-argument constructor positionally.
+There is no _new_instance / _replace hook a subclass can override, so a
+subclass carrying extra state loses it even when its type is preserved.

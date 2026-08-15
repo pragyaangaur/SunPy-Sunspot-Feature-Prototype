@@ -1,0 +1,52 @@
+==============================================================================
+daily -> monthly
+==============================================================================
+months compared: 2502  (1818-01 to 2026-07)
+
+sum of daily n_observations == published monthly n_observations: 100.00% of months
+SILSO pooled formula reproduces published sigma: max|diff| = 0.0500, within file rounding (0.05) for 100.00% of months
+
+ratio of naive quadrature to SILSO published monthly sigma
+------------------------------------------------------------------------------
+naive (raw dispersions, rho=0)     n= 2499  median=  0.1815  mean=  0.1885  5%= 0.1779  95%= 0.2300
+naive (converted to SEM, rho=0)    n= 2499  median=  0.1802  mean=  0.1577  5%= 0.0378  95%= 0.2288
+
+expected if the discrepancy were purely 1/sqrt(N_days):
+1/sqrt(N_days)                     n= 2502  median=  0.1796  mean=  0.1877  5%= 0.1796  95%= 0.2294
+correlation of ratio_disp with 1/sqrt(N_days): 0.9268
+
+implied effective correlation rho_eff
+------------------------------------------------------------------------------
+from raw dispersions     median=   1.0829  5%=   1.0086  95%=   1.6231  fraction in [-1,1]: 2.09%
+from standard errors     median=   1.1026  5%=   1.0093  95%=  33.1611  fraction in [-1,1]: 1.89%
+
+is the discrepancy stable, or does it track solar cycle / station count?
+------------------------------------------------------------------------------
+  corr(ratio_disp, smoothed SN (cycle phase) ) =  0.0490
+  corr(ratio_disp, monthly mean SN           ) =  0.0523
+  corr(ratio_disp, mean stations per day     ) = -0.0263
+  corr(ratio_disp, days in month             ) = -0.8336
+
+  ratio_disp by 25-year era:
+    1800-1824: n=  83  median=0.2085  IQR=[0.1896, 0.2318]
+    1825-1849: n= 300  median=0.2124  IQR=[0.1909, 0.2420]
+    1850-1874: n= 300  median=0.1803  IQR=[0.1795, 0.1825]
+    1875-1899: n= 300  median=0.1806  IQR=[0.1794, 0.1826]
+    1900-1924: n= 300  median=0.1805  IQR=[0.1793, 0.1827]
+    1925-1949: n= 300  median=0.1804  IQR=[0.1795, 0.1825]
+    1950-1974: n= 300  median=0.1806  IQR=[0.1794, 0.1826]
+    1975-1999: n= 300  median=0.1812  IQR=[0.1792, 0.1838]
+    2000-2024: n= 300  median=0.1815  IQR=[0.1789, 0.1860]
+    2025-2049: n=  19  median=0.1821  IQR=[0.1798, 0.1845]
+
+==============================================================================
+daily -> yearly (second aggregation, control)
+==============================================================================
+years compared: 208 (1818-2025)
+SILSO pooled formula reproduces published yearly sigma: max|diff| = 0.0499, within 0.05 for 100.00% of years
+naive (raw dispersions, rho=0)     n=  208  median=  0.0525  mean=  0.0541  5%= 0.0519  95%= 0.0637
+naive (converted to SEM, rho=0)    n=  208  median=  0.0523  mean=  0.0453  5%= 0.0116  95%= 0.0637
+1/sqrt(N_days)                     n=  208  median=  0.0523  mean=  0.0539  5%= 0.0523  95%= 0.0636
+rho_eff (raw dispersions): median=1.1300  fraction in [-1,1]: 0.00%
+
+figure written to /Users/pragyaangaur/SunPy-Sunspots-Review/figures/quadrature_check.png

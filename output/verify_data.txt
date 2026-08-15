@@ -1,0 +1,68 @@
+Structural verification of the SILSO v2.0 files
+==============================================================================
+
+daily_total  (SN_d_tot_V2.0.csv)
+   rows=76183  field counts={8: 76183}  delimiter=';'  header=none  quoting=none
+   bytes=2894954  sha256=b3ea957e86737445...
+   retrieved=2026-08-14T09:07:52Z  url=https://www.sidc.be/SILSO/DATA/SN_d_tot_V2.0.csv
+   first=['1818', '01', '01', '1818.001', '  -1', ' -1.0', '   0', '1']
+   last =['2026', '07', '31', '2026.579', ' 118', ' 13.2', '  44', '0']
+
+daily_hemispheric  (SN_d_hem_V2.0.csv)
+   rows=12631  field counts={14: 12631}  delimiter=';'  header=none  quoting=none
+   bytes=846277  sha256=05a7472e822ecdfc...
+   retrieved=2026-08-14T09:08:00Z  url=https://www.sidc.be/SILSO/DATA/SN_d_hem_V2.0.csv
+   first=['1992', '01', '01', '1992.001', ' 186', '  0', '186', '  14.3', '  1.0', ' 14.3', '  19', ' -1', ' -1', '1']
+   last =['2026', '07', '31', '2026.579', ' 118', ' 86', ' 32', '  13.2', ' 10.2', '  8.7', '  44', ' 39', ' 39', '0']
+
+monthly_total  (SN_m_tot_V2.0.csv)
+   rows=3331  field counts={7: 3331}  delimiter=';'  header=none  quoting=none
+   bytes=126578  sha256=a78640e2e0c96a7c...
+   retrieved=2026-08-14T09:08:02Z  url=https://www.sidc.be/SILSO/DATA/SN_m_tot_V2.0.csv
+   first=['1749', '01', '1749.042', '  96.7', ' -1.0', '   -1', '1']
+   last =['2026', '07', '2026.538', '  78.1', ' 11.2', ' 1371', '0']
+
+monthly_smoothed  (SN_ms_tot_V2.0.csv)
+   rows=3331  field counts={7: 3331}  delimiter=';'  header=none  quoting=none
+   bytes=126578  sha256=1289e5922889f26f...
+   retrieved=2026-08-14T09:08:03Z  url=https://www.sidc.be/SILSO/DATA/SN_ms_tot_V2.0.csv
+   first=['1749', '01', '1749.042', '  -1.0', ' -1.0', '   -1', '1']
+   last =['2026', '07', '2026.538', '  -1.0', ' -1.0', ' 1371', '0']
+
+yearly_total  (SN_y_tot_V2.0.csv)
+   rows=326  field counts={5: 326}  delimiter=';'  header=none  quoting=none
+   bytes=9454  sha256=0ccb2104b03f2f0c...
+   retrieved=2026-08-14T09:08:04Z  url=https://www.sidc.be/SILSO/DATA/SN_y_tot_V2.0.csv
+   first=['1700.5', '   8.3', ' -1.0', '    -1', '1']
+   last =['2025.5', ' 123.2', ' 17.8', ' 12473', '1']
+
+SENTINEL (-1) SEMANTICS
+------------------------------------------------------------------------------
+daily_total: value=-1 & sigma=-1: 3247;  value=-1 only: 0;  sigma=-1 only: 0
+daily_total: n_observations where value=-1: [0] (0, not -1: the count column uses a different sentinel)
+daily_total: genuine zero sunspot numbers: 11398 (distinct from missing, must not be conflated)
+monthly_total: value=-1: 0;  sigma=-1 while value is valid: 828
+   first month with a sigma: 1818-01 (sigma exists only once per-station daily data begins)
+daily_hemispheric: missing values or sigmas: 0
+   hemispheric station counts are -1 on 8401 rows, all before 2015-01-01, on rows whose values are valid
+monthly_smoothed: value=-1 on 12 rows: ['1749-01', '1749-02', '1749-03', '1749-04', '1749-05', '1749-06', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06', '2026-07'] (the +/-6 month edges of the 13-month filter)
+
+WHAT THE SIGMA COLUMN IS
+------------------------------------------------------------------------------
+days with exactly one contributing station: 56288
+   of those, sigma != 0 on 54321 (96.5%)
+   -> sigma cannot be a plain dispersion across stations on those days;
+      before 1981 the count column is fixed at 1 by convention.
+first day with more than one station: 1981-01-01
+monthly sigma reproduced as sqrt(SUM(N_d sigma_d^2)/SUM(N_d)): n=2502, max|diff|=0.0500, within rounding for 100.00%
+   -> the published monthly sigma is a pooled station dispersion,
+      NOT a standard error of the monthly mean.
+
+PROVISIONAL / DEFINITIVE FLAG
+------------------------------------------------------------------------------
+daily_total: flag=0 on 122 rows, 2026-04-01 to 2026-07-31  (0 = provisional, 1 = definitive)
+
+RELATIONSHIP BETWEEN PRODUCTS
+------------------------------------------------------------------------------
+monthly mean == arithmetic mean of daily values: 99.40% of 2502 months (to file rounding)
+monthly n_observations == sum of daily n_observations: 100.00% of 2502 months
