@@ -638,8 +638,8 @@ numpy 2.5.0, matplotlib 3.11.0, on Python 3.13.
 If your machine has a development checkout of sunpy installed in editable mode,
 the audit will measure that instead of a release. Use the virtualenv.
 
-## Data
+## Data attribution
 
-Sunspot Number version 2.0, [WDC-SILSO](https://www.sidc.be/SILSO/), Royal
-Observatory of Belgium, Brussels. Snapshot retrieved 2026-08-13; checksums in
-[`output/verify_data.txt`](output/verify_data.txt).
+Sunspot Number version 2.0, WDC-SILSO, Royal Observatory of Belgium, Brussels.
+Licensed CC BY-NC 4.0. This repository redistributes no SILSO data; it downloads
+and caches at runtime. Source: WDC-SILSO, Royal Observatory of Belgium, Brussels, https://doi.org/10.24414/qnza-ac80
