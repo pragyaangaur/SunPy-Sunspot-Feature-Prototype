@@ -3,3 +3,6 @@ __pycache__/
 .venv/
 .pytest_cache/
 .silso_cache/
+
+# Local editor and tooling config
+.claude/
