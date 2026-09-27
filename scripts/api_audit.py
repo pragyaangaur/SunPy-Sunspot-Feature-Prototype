@@ -30,7 +30,7 @@ import sunpy  # noqa: E402
 from sunpy.timeseries import GenericTimeSeries  # noqa: E402
 
 from silso_uncertainty.baseline import load, plain_meta  # noqa: E402
-from silso_uncertainty.uncertain import (INDEPENDENT, UncertainTimeSeries)  # noqa: E402
+from silso_uncertainty.uncertain import (UncertainTimeSeries)  # noqa: E402
 
 OUTPUT = Path(__file__).resolve().parents[1] / "output"
 OK, NO, NA = "yes", "NO", "n/a"

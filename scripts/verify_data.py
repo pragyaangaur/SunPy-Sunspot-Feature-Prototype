@@ -73,14 +73,14 @@ def main() -> None:
     emit(f"monthly_total: value=-1: {sum(1 for x in m if float(x[3]) == -1)};  "
          f"sigma=-1 while value is valid: "
          f"{sum(1 for x in m if float(x[4]) == -1 and float(x[3]) != -1)}")
-    valid = [x for x in m if float(x[4]) != -1][0]
+    valid = next(x for x in m if float(x[4]) != -1)
     emit(f"   first month with a sigma: {valid[0]}-{valid[1]} "
          "(sigma exists only once per-station daily data begins)")
 
     h = data["daily_hemispheric"]
     emit(f"daily_hemispheric: missing values or sigmas: "
          f"{sum(1 for x in h if any(float(x[i]) == -1 for i in range(4, 10)))}")
-    first_hem = [x for x in h if float(x[11]) != -1][0]
+    first_hem = next(x for x in h if float(x[11]) != -1)
     emit(f"   hemispheric station counts are -1 on "
          f"{sum(1 for x in h if float(x[11]) == -1)} rows, all before "
          f"{first_hem[0]}-{first_hem[1]}-{first_hem[2]}, on rows whose values are valid")
